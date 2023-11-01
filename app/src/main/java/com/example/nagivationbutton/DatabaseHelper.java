@@ -138,20 +138,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = HIKE_ID_COLUMN + "=?";
         String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = db.query(HIKE_NAME_COLUMN, null, selection, selectionArgs, null, null, null);
+        Cursor cursor = db.query(HIKE_TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
         Hiking hikingData = null;
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                int Id = cursor.getColumnIndex("id");
-                String name = cursor.getString(cursor.getColumnIndex("name"));
-                String location = cursor.getString(cursor.getColumnIndex("location"));
-                String date = cursor.getString(cursor.getColumnIndex("date"));
-                String parkingAvailable = cursor.getString(cursor.getColumnIndex("parkingAvailable"));
-                String lengthOfHike = cursor.getString(cursor.getColumnIndex("lengthOfHike"));
-                String difficultLevel = cursor.getString(cursor.getColumnIndex("difficultLevel"));
-                String description = cursor.getString(cursor.getColumnIndex("description"));
+                int Id = cursor.getColumnIndex(HIKE_ID_COLUMN);
+                String name = cursor.getString(cursor.getColumnIndex(HIKE_NAME_COLUMN));
+                String location = cursor.getString(cursor.getColumnIndex(HIKE_LOCATION_COLUMN));
+                String date = cursor.getString(cursor.getColumnIndex(HIKE_DATE_COLUMN));
+                String parkingAvailable = cursor.getString(cursor.getColumnIndex(HIKE_PARKING_COLUMN));
+                String lengthOfHike = cursor.getString(cursor.getColumnIndex(HIKE_LENGTH_COLUMN));
+                String difficultLevel = cursor.getString(cursor.getColumnIndex(HIKE_DIFFICULTY_COLUMN));
+                String description = cursor.getString(cursor.getColumnIndex(HIKE_DESCRIPTION_COLUMN));
 
                 // Create a HikingData object for this record
                 hikingData = new Hiking(
@@ -197,7 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Query Observation all records from the table
     public Cursor getAllObservationRecords(int hikingId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String selection = HIKE_ID_COLUMN + "=?";
+        String selection = HikingId_COLUMN + "=?";
         String[] selectionArgs = {String.valueOf(hikingId)};
         return db.query(DATABASE_OBSERVATION, null, selection, selectionArgs, null, null, null);
     }

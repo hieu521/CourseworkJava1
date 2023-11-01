@@ -25,30 +25,27 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
+    private boolean shouldrefreshonresume = false;
     RecyclerView recyclerView;
     List<Hiking> dataList;
     CustomHikingAdapter adapter;
     DatabaseHelper dbHelper;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
+    public void onStop() {
+        super.onStop();
+        shouldrefreshonresume = true;
     }
 
     @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
+    public void onResume() {
+        super.onResume();
+        // check should we need to refresh the fragment
+        if(shouldrefreshonresume){
+            Log.d("HomeFragment", "fuckfdsafd");
+            refreshData();
+        }
     }
-
-    @Subscribe
-    public void onRefreshDataEvent(RefreshDataEvent event) {
-        Log.d("HomeFragment", "fuck");
-        refreshData();
-    }
-
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -89,6 +86,10 @@ public class HomeFragment extends Fragment {
     public void refreshData() {
         dataList.clear(); // Xóa dữ liệu hiện tại
         dataList = dbHelper.getAllHikes();
-        adapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+        adapter = new CustomHikingAdapter(getActivity(), dataList, dbHelper, this);
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
     }
 }

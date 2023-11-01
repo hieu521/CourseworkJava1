@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -206,6 +207,7 @@ public class AddingHiking extends AppCompatActivity {
 
             // Gọi phương thức refreshData() trong MainActivity để cập nhật danh sách dữ liệu
             EventBus.getDefault().post(new RefreshDataEvent());
+            Log.d("AddFragment", "Post");
 
             // Đóng Activity UploadActivity và quay lại MainActivity
             finish();
