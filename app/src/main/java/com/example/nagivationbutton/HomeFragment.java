@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         // check should we need to refresh the fragment
         if(shouldrefreshonresume){
-            Log.d("HomeFragment", "fuckfdsafd");
+            Log.d("HomeFragment", "Successful");
             refreshData();
         }
     }

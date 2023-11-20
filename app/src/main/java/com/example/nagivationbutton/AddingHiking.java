@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AddingHiking extends AppCompatActivity {
 
@@ -120,7 +122,17 @@ public class AddingHiking extends AppCompatActivity {
             }
         });
     }
-
+    public boolean isNumeric(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
     public void saveData() {
         TextInputLayout textInputLayoutName = findViewById(R.id.textInputLayoutName);
         TextInputLayout textInputLayoutLocation = findViewById(R.id.textInputLayoutLocation);
@@ -164,6 +176,7 @@ public class AddingHiking extends AppCompatActivity {
             textInputLayoutLocation.setError(null);
         }
 
+
         if (date.isEmpty()) {
             textInputLayoutDate.setError("Date is required");
             isValid = false;
@@ -180,6 +193,12 @@ public class AddingHiking extends AppCompatActivity {
 
         if (lengthOfHike.isEmpty()) {
             textInputLayoutLengthOfHike.setError("Length Of Hike is required");
+            isValid = false;
+        } else {
+            textInputLayoutLengthOfHike.setError(null);
+        }
+        if (lengthOfHike.isEmpty() || !isNumeric(lengthOfHike)) {
+            textInputLayoutLengthOfHike.setError("Length Of Hike must be a number");
             isValid = false;
         } else {
             textInputLayoutLengthOfHike.setError(null);
